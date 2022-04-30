@@ -1,0 +1,443 @@
+---
+title: "pro"
+output: html_document
+---
+
+## reading the dataset
+```{r }
+data <- read.csv("data.csv")
+str(data)
+head(data)
+tail(data)
+```
+
+## checking for the null values
+```{r }
+sum(is.na(data))
+data$Date <- as.character.Date(data$Date)
+sum(is.na(data$Date))
+```
+
+
+## checking the null values column wise
+```{r }
+sum(is.na(data$Year))
+sum(is.na(data$Type))
+sum(is.na(data$Date))
+sum(is.na(data$Time))
+sum(is.na(data$Place))
+sum(is.na(data$Latitude))
+sum(is.na(data$Longitude))
+sum(is.na(data$ï..Police.Station))
+```
+
+
+```{r }
+df <- as.data.frame(table(data$Year))
+df$Var1 <- as.numeric(df$Var1)
+cor(df$Var1,df$Freq)
+```
+
+
+```{r }
+str(data)
+```
+
+```{r }
+unique(data$Type)
+```
+
+
+```{r }
+library(dplyr)
+df <- data %>%
+  group_by(data$Year) %>%
+  summarize(no_of_crimes = n())
+df
+```
+
+```{r }
+plot(df)
+```
+
+```{r }
+library(forecast)
+library(tseries)
+yearly <- ts(df$no_of_crimes,start = c(2015,1))
+plot(yearly)
+acf(yearly)
+datamodel = auto.arima(yearly,ic="aic",trace = TRUE)
+dataf = forecast(datamodel,level=c(95),h=5)
+dataf
+plot(dataf)
+accuracy(dataf)
+```
+## year wise murders
+```{r }
+df1 <- data %>%
+  filter(data$Type == "Murder")
+df1 <- df1 %>%
+  group_by(df1$Year) %>%
+  summarize(no_of_crimes = n())
+df1
+yearly <- ts(df1$no_of_crimes,start = c(2015,1))
+plot(yearly)
+acf(yearly)
+datamodel = auto.arima(yearly,ic="aic",trace = TRUE)
+dataf = forecast(datamodel,level=c(95),h=5)
+plot(dataf)
+dataf
+accuracy(dataf)
+```
+
+## year wise Attempted Murder
+```{r }
+df2 <- data %>%
+  filter(data$Type == "Attempted Murder")
+df2 <- df2 %>%
+  group_by(df2$Year) %>%
+  summarize(no_of_crimes = n())
+df2
+yearly <- ts(df2$no_of_crimes,start = c(2015,1))
+plot(yearly)
+acf(yearly)
+datamodel = auto.arima(yearly,ic="aic",trace = TRUE)
+dataf = forecast(datamodel,level=c(95),h=5)
+dataf
+accuracy(dataf)
+plot(dataf)
+```
+
+## year wise Robbery
+```{r }
+df3 <- data %>%
+  filter(data$Type == "Robbery")
+df3 <- df3 %>%
+  group_by(df3$Year) %>%
+  summarize(no_of_crimes = n())
+df3
+yearly <- ts(df3$no_of_crimes,start = c(2015,1))
+plot(yearly)
+acf(yearly)
+datamodel = auto.arima(yearly,ic="aic",trace = TRUE)
+dataf = forecast(datamodel,level=c(95),h=5)
+plot(dataf)
+accuracy(dataf)
+dataf
+```
+
+
+## year wise Chain Snatching
+```{r }
+df4 <- data %>%
+  filter(data$Type == "Chain Snatching")
+df4 <- df4 %>%
+  group_by(df4$Year) %>%
+  summarize(no_of_crimes = n())
+df4
+yearly <- ts(df4$no_of_crimes,start = c(2015,1))
+plot(yearly)
+acf(yearly)
+datamodel = auto.arima(yearly,ic="aic",trace = TRUE)
+dataf = forecast(datamodel,level=c(95),h=5)
+plot(dataf)
+dataf
+accuracy(dataf)
+```
+
+
+## year wise 2 wheeler theft
+```{r }
+df5 <- data %>%
+  filter(data$Type == "2 wheeler theft")
+df5 <- df5 %>%
+  group_by(df5$Year) %>%
+  summarize(no_of_crimes = n())
+df5
+yearly <- ts(df5$no_of_crimes,start = c(2015,1))
+plot(yearly)
+acf(yearly)
+datamodel = auto.arima(yearly,ic="aic",trace = TRUE)
+dataf = forecast(datamodel,level=c(95),h=5)
+dataf
+plot(dataf)
+accuracy(dataf)
+```
+
+## year wise Ordinary Theft
+```{r }
+df6 <- data %>%
+  filter(data$Type == "Ordinary Theft")
+df6 <- df6 %>%
+  group_by(df6$Year) %>%
+  summarize(no_of_crimes = n())
+df6
+yearly <- ts(df6$no_of_crimes,start = c(2015,1))
+plot(yearly)
+acf(yearly)
+datamodel = auto.arima(yearly,ic="aic",trace = TRUE)
+dataf = forecast(datamodel,level=c(95),h=5)
+plot(dataf)
+dataf
+accuracy(dataf)
+```
+
+## year wise 4 Wheeler Theft
+```{r }
+df7 <- data %>%
+  filter(data$Type == "4 Wheeler Theft")
+df7 <- df7 %>%
+  group_by(df7$Year) %>%
+  summarize(no_of_crimes = n())
+df7
+yearly <- ts(df7$no_of_crimes,start = c(2015,1))
+plot(yearly)
+acf(yearly)
+datamodel = auto.arima(yearly,ic="aic",trace = TRUE)
+dataf = forecast(datamodel,level=c(95),h=5)
+plot(dataf)
+dataf
+accuracy(dataf)
+```
+
+## year wise Kidnap
+```{r }
+df8 <- data %>%
+  filter(data$Type == "Kidnap")
+df8 <- df8 %>%
+  group_by(df8$Year) %>%
+  summarize(no_of_crimes = n())
+df8
+yearly <- ts(df8$no_of_crimes,start = c(2015,1))
+plot(yearly)
+acf(yearly)
+datamodel = auto.arima(yearly,ic="aic",trace = TRUE)
+dataf = forecast(datamodel,level=c(95),h=5)
+plot(dataf)
+dataf
+accuracy(dataf)
+```
+
+## year wise Rape
+```{r }
+df9 <- data %>%
+  filter(data$Type == "Rape")
+df9 <- df9 %>%
+  group_by(df9$Year) %>%
+  summarize(no_of_crimes = n())
+df9
+yearly <- ts(df9$no_of_crimes,start = c(2015,1))
+plot(yearly)
+acf(yearly)
+datamodel = auto.arima(yearly,ic="aic",trace = TRUE)
+dataf = forecast(datamodel,level=c(95),h=5)
+plot(dataf)
+dataf
+accuracy(dataf)
+```
+
+## year wise Assault
+```{r }
+df10 <- data %>%
+  filter(data$Type == "Assault")
+df10 <- df10 %>%
+  group_by(df10$Year) %>%
+  summarize(no_of_crimes = n())
+df10
+yearly <- ts(df10$no_of_crimes,start = c(2015,1))
+plot(yearly)
+acf(yearly)
+datamodel = auto.arima(yearly,ic="aic",trace = TRUE)
+dataf = forecast(datamodel,level=c(95),h=5)
+plot(dataf)
+dataf
+accuracy(dataf)
+```
+## we could not make much forecasting yearly
+
+## monthly
+```{r }
+library(dplyr)
+library(tidyr)
+data <- data %>%
+  separate(Date,c("date","month","year"))
+head(data)
+```
+
+
+
+```{r }
+data$Year <- as.integer(data$Year)
+data$date <- as.integer(data$date)
+data$month <- as.integer(data$month)
+data$year <- as.integer(data$year)
+data <- data %>%
+  mutate(month=replace(month,is.na(month),12))
+#sum(is.na(data$month))
+data <- data %>%
+  mutate(month=ifelse(month >12,ifelse(month %% 10 == 0,month/10,month %% 10),month))
+data1 <- data %>%
+  group_by(Year,month) %>%
+  summarize(cases = n())
+data1 <- data1 %>%
+  filter(month > 0)
+head(data1)
+```
+
+
+```{r }
+monthly <- ts(data1$cases,start = c(1,1))
+plot(monthly)
+acf(monthly)
+datamodel = auto.arima(monthly,ic="aic",trace = TRUE)
+dataf = forecast(datamodel,level=c(95),h=24)
+plot(dataf)
+dataf
+accuracy(dataf)
+```
+
+## Murder
+```{r }
+unique(data$Type)
+data2 <- data %>%
+  filter(month > 0 & Type =="Murder") %>%
+  group_by(Year,month) %>%
+  summarize(cases = n())
+murder <- ts(data2$cases,start = c(1,1))
+plot(murder)
+acf(murder)
+datamodel = auto.arima(murder,ic="aic",trace = TRUE)
+dataf = forecast(datamodel,level=c(95),h=24)
+plot(dataf)
+dataf
+```
+
+
+## Murder
+```{r }
+data3 <- data %>%
+  filter(month > 0 & Type =="Attempted Murder") %>%
+  group_by(Year,month) %>%
+  summarize(cases = n())
+Attempted_Murder <- ts(data3$cases,start = c(1,1))
+plot(Attempted_Murder)
+acf(Attempted_Murder)
+datamodel = auto.arima(Attempted_Murder,ic="aic",trace = TRUE)
+dataf = forecast(datamodel,level=c(95),h=24)
+plot(dataf)
+dataf
+```
+
+
+## Robbery
+```{r }
+data4 <- data %>%
+  filter(month > 0 & Type =="Robbery") %>%
+  group_by(Year,month) %>%
+  summarize(cases = n())
+Robbery <- ts(data4$cases,start = c(1,1))
+plot(Robbery)
+acf(Robbery)
+datamodel = auto.arima(Robbery,ic="aic",trace = TRUE)
+dataf = forecast(datamodel,level=c(95),h=24)
+plot(dataf)
+dataf
+```
+
+## Chain Snatching
+```{r }
+data5 <- data %>%
+  filter(month > 0 & Type =="Chain Snatching") %>%
+  group_by(Year,month) %>%
+  summarize(cases = n())
+Chain_Snatching <- ts(data5$cases,start = c(1,1))
+plot(Chain_Snatching)
+acf(Chain_Snatching)
+datamodel = auto.arima(Chain_Snatching,ic="aic",trace = TRUE)
+dataf = forecast(datamodel,level=c(95),h=24)
+plot(dataf)
+dataf
+```
+
+## 2 wheeler theft
+```{r }
+data6 <- data %>%
+  filter(month > 0 & Type =="2 wheeler theft") %>%
+  group_by(Year,month) %>%
+  summarize(cases = n())
+two_wheeler_theft <- ts(data6$cases,start = c(1,1))
+plot(two_wheeler_theft)
+acf(two_wheeler_theft)
+datamodel = auto.arima(two_wheeler_theft,ic="aic",trace = TRUE)
+dataf = forecast(datamodel,level=c(95),h=24)
+plot(dataf)
+dataf
+accuracy(dataf)
+```
+
+## Ordinary Theft
+```{r }
+data7 <- data %>%
+  filter(month > 0 & Type =="Ordinary Theft") %>%
+  group_by(Year,month) %>%
+  summarize(cases = n())
+OrdinaryTheft <- ts(data7$cases,start = c(1,1))
+plot(OrdinaryTheft)
+acf(OrdinaryTheft)
+datamodel = auto.arima(OrdinaryTheft,ic="aic",trace = TRUE)
+dataf = forecast(datamodel,level=c(95),h=24)
+plot(dataf)
+dataf
+accuracy(dataf)
+```
+
+## Robbery
+```{r }
+data4 <- data %>%
+  filter(month > 0 & Type =="Robbery") %>%
+  group_by(Year,month) %>%
+  summarize(cases = n())
+Robbery <- ts(data4$cases,start = c(1,1))
+plot(Robbery)
+acf(Robbery)
+datamodel = auto.arima(Robbery,ic="aic",trace = TRUE)
+dataf = forecast(datamodel,level=c(95),h=24)
+plot(dataf)
+dataf
+unique(data$Type)
+```
+
+```{r }
+data7 <- data %>%
+  filter(month > 0 & Type =="Kidnap") %>%
+  group_by(Year,month) %>%
+  summarize(cases = n())
+OrdinaryTheft <- ts(data7$cases,start = c(1,1))
+plot(OrdinaryTheft)
+acf(OrdinaryTheft)
+datamodel = auto.arima(OrdinaryTheft,ic="aic",trace = TRUE)
+dataf = forecast(datamodel,level=c(95),h=24)
+plot(dataf)
+dataf
+accuracy(dataf)
+```
+
+
+```{r }
+data7 <- data %>%
+  filter(month > 0 & Type =="Assault") %>%
+  group_by(Year,month) %>%
+  summarize(cases = n())
+OrdinaryTheft <- ts(data7$cases,start = c(1,1))
+plot(OrdinaryTheft)
+acf(OrdinaryTheft)
+datamodel = auto.arima(OrdinaryTheft,ic="aic",trace = TRUE)
+dataf = forecast(datamodel,level=c(95),h=24)
+plot(dataf)
+dataf
+accuracy(dataf)
+```
+
+```{r }
+
+```
